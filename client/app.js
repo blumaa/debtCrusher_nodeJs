@@ -1,15 +1,29 @@
-import React from 'react'
+import React, {Component} from 'react'
 
 import {Navbar} from './components'
 import Routes from './routes'
+import {connect} from 'react-redux'
+import {fetchProjects} from './store/project'
 
-const App = () => {
-  return (
-    <div>
-      <Navbar />
-      <Routes />
-    </div>
-  )
+class App extends Component {
+  componentDidMount = () => {
+    this.props.getProjects()
+  }
+
+  render() {
+    return (
+      <div>
+        <Navbar />
+        <Routes />
+      </div>
+    )
+  }
 }
 
-export default App
+const mapDispatchToProps = dispatch => {
+  return {
+    getProjects: () => dispatch(fetchProjects())
+  }
+}
+
+export default connect(null, mapDispatchToProps)(App)

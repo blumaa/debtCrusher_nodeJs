@@ -1,19 +1,46 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Project, ProjectBacker} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({
+      email: 'hector@gmail.com',
+      password: '12345',
+      displayName: 'Hector the Cat',
+      birthDate: '2017-06-06',
+      bio: 'I was born in MN and I had a sister named Imelda.',
+      accountBalance: 100
+    }),
+    User.create({
+      email: 'aaron@gmail.com',
+      password: '12345',
+      displayName: 'Aaron I have so much debt',
+      birthDate: '1982-01-12',
+      bio: 'Why the hell did I do a masters I have so much debt.',
+      accountBalance: 10
+    })
   ])
+
+  /* const projects = await Promise.all([
+    Project.create({name: 'Fund my student loans pls!', goal: '123', school: 'UIC'}),
+  ]) */
+
+  /* const projectbackers = await Promise.all([
+    ProjectBacker.create({primaryProjectId: 1, backerId: 2, amount: 10}),
+    ProjectBacker.create({primaryProjectId: 1, backerId: 1, amount: 30}),
+  ]) */
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
+  /* console.log(`seeded ${projects.length} projects`)
+  console.log(`seeded successfully`)
+  console.log(`seeded ${projectbackers.length} projectbackers`)
+  console.log(`seeded successfully`) */
 }
 
 // We've separated the `seed` function from the `runSeed` function.

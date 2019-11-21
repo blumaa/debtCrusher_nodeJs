@@ -1,4 +1,15 @@
 const User = require('./user')
+const Project = require('./project')
+const ProjectBacker = require('./projectbacker')
+const SecondaryPayment = require('./secondarypayment')
+
+Project.belongsTo(User, {as: 'debtor'})
+
+ProjectBacker.belongsTo(User, {as: 'backer'})
+ProjectBacker.belongsTo(Project, {as: 'primaryProject'})
+
+SecondaryPayment.belongsTo(Project, {as: 'secondaryPayment'})
+SecondaryPayment.belongsTo(ProjectBacker, {as: 'projectBacker'})
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -14,5 +25,8 @@ const User = require('./user')
  * instead of: const User = require('../db/models/user')
  */
 module.exports = {
-  User
+  User,
+  Project,
+  ProjectBacker,
+  SecondaryPayment
 }

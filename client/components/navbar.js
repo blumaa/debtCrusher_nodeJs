@@ -1,26 +1,38 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import {logout} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = ({handleClick, isLoggedIn, current_user}) => (
   <div>
-    <h1>BOILERMAKER</h1>
     <nav>
       {isLoggedIn ? (
-        <div>
+        <div className="ui fixed inverted menu">
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
+          <NavLink to="/home" className="olive item">
+            {current_user ? current_user : 'no user'}
+          </NavLink>
+          {/*<NavLNavink to="/FastLink">FastLink</NavLink> */}
+          <NavLink to="/projects" className="item">
+            Help a Student
+          </NavLink>
+          <NavLink to="/about" className="item">
+            How It Works
+          </NavLink>
+          <NavLink to="#" onClick={handleClick} className="blue item">
             Logout
-          </a>
+          </NavLink>
         </div>
       ) : (
-        <div>
+        <div className="ui fixed inverted menu">
           {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
+          <NavLink to="/login" className="item">
+            Login
+          </NavLink>
+          <NavLink to="/signup" className="item">
+            Sign Up
+          </NavLink>
         </div>
       )}
     </nav>
@@ -33,7 +45,8 @@ const Navbar = ({handleClick, isLoggedIn}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    current_user: state.user.email
   }
 }
 
